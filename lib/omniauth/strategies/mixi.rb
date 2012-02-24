@@ -26,9 +26,19 @@ module OmniAuth
       uid { raw_info['entry']['id']}
 
       info do
-        {
-        :name => raw_info['entry']['displayName']
-        }
+        prune!({
+          'name' => raw_info['entry']['displayName'],
+          'image' => raw_info['entry']['thumbnailUrl'],
+          'urls' => {
+            'Mixi' => raw_info['entry']['profileUrl'],
+          }
+        })
+      end
+
+      extra do
+        prune!({
+          'raw_info' => raw_info
+        })
       end
 
       def callback_phase
@@ -39,6 +49,15 @@ module OmniAuth
       def raw_info
         @raw_info ||= MultiJson.decode(access_token.get("/2/people/@me/@self?oauth_token=#{access_token.token}").body)
         @raw_info
+      end
+
+      private
+
+      def prune!(hash)
+        hash.delete_if do |_, value|
+          prune!(value) if value.is_a?(Hash)
+          value.nil? || (value.respond_to?(:empty?) && value.empty?)
+        end
       end
     end
   end
