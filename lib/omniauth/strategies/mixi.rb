@@ -20,6 +20,12 @@ module OmniAuth
         :parse => :json
       }
 
+      option :profile_request_params, {
+        :thumbnailPrivacy => 'everyone'
+      }
+
+      option :profile_request_options, [ :thumbnailPrivacy ]
+
       uid { raw_info['entry']['id']}
 
       info do
@@ -43,8 +49,12 @@ module OmniAuth
         super
       end
 
+      def profile_request_params
+        options.profile_request_params.merge(options.profile_request_options.inject({}){|h,k| h[k.to_sym] = options[k] if options[k]; h})
+      end
+
       def raw_info
-        @raw_info ||= access_token.get('/2/people/@me/@self').parsed
+        @raw_info ||= access_token.get('/2/people/@me/@self', :params => profile_request_params).parsed
       end
 
       def build_access_token
