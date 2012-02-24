@@ -1,27 +1,24 @@
-# OmniAuth Facebook &nbsp;[![Build Status](http://travis-ci.org/mkdynamic/omniauth-facebook.png?branch=master)](http://travis-ci.org/mkdynamic/omniauth-facebook)
+# OmniAuth Mixi
 
-**Note:** This gem is designed to work with the unreleased OmniAuth 1.0 library. It will not be officially released on RubyGems.org until OmniAuth 1.0 is released.
+mixi OAuth2 Strategy for OmniAuth 1.0.
 
-This gem contains the Facebook strategy for OmniAuth.
+Supports authorization flow for mixi Graph API.
 
-## Supported Flows
+http://developer.mixi.co.jp/connect/mixi_graph_api/api_auth/
 
-Supports the Server-side Flow as described in the the Facebook docs:
-http://developers.facebook.com/docs/authentication
+# Usage
 
-**Pending:** Supports the Client-side Flow via parsing out the verification code from the signed request cookie.
+Here's a quick example, adding the middleware to a Rails app in config/initializers/omniauth.rb:
 
-## Ruby
-
-Tested with the following Ruby versions:
-
-- MRI 1.9.2
-- MRI 1.8.7
-- JRuby 1.6.4
+```ruby
+Rails.application.config.middleware.use OmniAuth::Builder do
+  provider :mixi, CONSUMER_KEY, CONSUMER_SECRET, :scope => 'r_profile w_voice', :display => 'pc', :thumbnailPrivacy => 'everyone'
+end
+```
 
 ## License
 
-Copyright (c) 2011 by Mark Dodwell
+Copyright (c) 2012 by Yusuke Morimoto
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
