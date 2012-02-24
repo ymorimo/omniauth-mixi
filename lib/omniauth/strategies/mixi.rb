@@ -31,6 +31,7 @@ module OmniAuth
       info do
         prune!({
           'name' => raw_info['entry']['displayName'],
+          'nickname' => raw_info['entry']['displayName'],
           'image' => raw_info['entry']['thumbnailUrl'],
           'urls' => {
             'Mixi' => raw_info['entry']['profileUrl'],
