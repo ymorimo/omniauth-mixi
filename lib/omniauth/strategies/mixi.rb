@@ -17,10 +17,7 @@ module OmniAuth
       }
 
       option :token_params, {
-        :parse => :json,
-        :mode => :query,
-        :param_name => 'oauth_token',
-        :header_format => "OAuth %s"
+        :parse => :json
       }
 
       uid { raw_info['entry']['id']}
@@ -47,8 +44,15 @@ module OmniAuth
       end
 
       def raw_info
-        @raw_info ||= MultiJson.decode(access_token.get("/2/people/@me/@self?oauth_token=#{access_token.token}").body)
-        @raw_info
+        @raw_info ||= access_token.get('/2/people/@me/@self').parsed
+      end
+
+      def build_access_token
+        super.tap do |token|
+          token.options.merge!(:mode => :header,
+                               :param_name => 'oauth_token',
+                               :header_format => "OAuth %s")
+        end
       end
 
       private
