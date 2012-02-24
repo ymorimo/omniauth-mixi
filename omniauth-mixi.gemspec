@@ -4,10 +4,10 @@ require File.expand_path('../lib/omniauth/mixi/version', __FILE__)
 Gem::Specification.new do |s|
   s.name     = 'omniauth-mixi'
   s.version  = OmniAuth::Mixi::VERSION
-  s.authors  = ['Mark Dodwell']
-  s.email    = ['mark@mkdynamic.co.uk']
+  s.authors  = ['Mark Dodwell', 'pivotal-sushi', 'Yusuke Morimoto']
+  s.email    = ['mark@mkdynamic.co.uk', '', 'yusuke.morimoto@gmail.com']
   s.summary  = 'Mixi strategy for OmniAuth'
-  s.homepage = 'https://github.com/involver/omniauth-mixi'
+  s.homepage = 'https://github.com/ymorimo/omniauth-mixi'
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
